@@ -1,8 +1,18 @@
 mod apu;
 mod cpu;
 mod ppu;
+mod processor;
 mod ram;
 
+use cpu::Cpu;
+use processor::Processor;
+
 fn main() {
-    println!("Hello, world!");
+    let mut cpu = Cpu::default();
+
+    let mut cycle: u128 = 0;
+    loop {
+        cpu.step(cycle);
+        cycle += 1;
+    }
 }
