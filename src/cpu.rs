@@ -9,7 +9,7 @@ pub struct Cpu {
     pub index_x: u8,
     pub index_y: u8,
     pub stack_pointer: u8,
-    pub status: u8,
+    pub processor_status: u8,
     pub program_counter: u16,
     apu: Apu,
     ppu: Ppu,
@@ -23,7 +23,7 @@ impl Default for Cpu {
             index_x: u8::default(),
             index_y: u8::default(),
             stack_pointer: 0xFD,
-            status: 0x34,
+            processor_status: 0x34,
             program_counter: u16::default(),
             apu: Apu::default(),
             ppu: Ppu::default(),
@@ -36,5 +36,36 @@ impl Processor for Cpu {
     fn step(&mut self, count: u128) {
         self.ppu.step(count);
         self.apu.step(count);
+    }
+}
+
+pub struct _ProcessorStatus {
+    carry: bool,
+    zero: bool,
+    interrupt_disable: bool,
+    decimal: bool,
+    b_flag: bool,
+    overflow: bool,
+    negative: bool,
+}
+
+impl Cpu {
+    pub fn new() -> Self {
+        Cpu::default()
+    }
+
+    pub fn _processor_status(&self) -> _ProcessorStatus {
+        fn is_bit_set(input: u8, n: u8) -> bool {
+            (input & (1 << n)) > 0
+        }
+        _ProcessorStatus {
+            carry: is_bit_set(self.processor_status, 0),
+            zero: is_bit_set(self.processor_status, 1),
+            interrupt_disable: is_bit_set(self.processor_status, 2),
+            decimal: is_bit_set(self.processor_status, 3),
+            b_flag: is_bit_set(self.processor_status, 4),
+            overflow: is_bit_set(self.processor_status, 6),
+            negative: is_bit_set(self.processor_status, 7),
+        }
     }
 }

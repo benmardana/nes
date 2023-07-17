@@ -8,7 +8,7 @@ use cpu::Cpu;
 use processor::Processor;
 
 fn main() {
-    let mut cpu = Cpu::default();
+    let mut cpu = Cpu::new();
 
     let mut cycle: u128 = 0;
     loop {

@@ -20,5 +20,5 @@ impl Default for Ppu {
 }
 
 impl Processor for Ppu {
-    fn step(&mut self, count: u128) {}
+    fn step(&mut self, _count: u128) {}
 }
