@@ -48,6 +48,20 @@ pub struct _ProcessorStatus {
     overflow: bool,
     negative: bool,
 }
+pub enum AddressingMode {
+    Accumulator,
+    Relative,
+    Immediate,
+    ZeroPage,
+    ZeroPageX,
+    ZeroPageY,
+    Absolute,
+    AbsoluteX,
+    AbsoluteY,
+    IndirectX,
+    IndirectY,
+    NoneAddressing,
+}
 
 impl Cpu {
     pub fn new() -> Self {
